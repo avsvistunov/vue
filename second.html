@@ -1,0 +1,101 @@
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<style text="text/css">
+  .toggleString {
+    font-size: 20px;
+    color: #0cbf05;
+    cursor: pointer;
+  }
+
+  .dangerText {
+    color: red;
+  }
+
+  .goodText {
+    color: blue;
+  }
+
+  .tooltipForHidden {
+    color: #ccc;
+    font-size: 10px;
+    font-style: italic;
+  }
+</style>
+<div id="vm">
+  <span class="nameString" v-show="visibility">{{ text + myName}}</span> <span  v-on:click="hideString" class="toggleString">↔</span>
+  <template v-if="!visibility">
+    <div class="tooltipForHidden">Click on arrow and string will be show</div>
+  </template>
+  <p>Here i'm reverse upper string from code: {{ (text + myName).split(' ').reverse().join(' ')}}</p>
+  <p>Here i'm reverse upper string with computed field (cached): {{ reversedNameString }}</p>
+  <p>Count to {{ limitCounter }}:</p>
+  <span v-for="n in limitCounter">{{ n }} </span>
+  <h3>Link to my VK account with "v-bind:href"</h3>
+  <div><a v-bind:href="vkPage">it's link to my vk account</a></div>
+  <h3>Link to my VK account with ":href"</h3>
+  <div><a :href="vkPage">it's link to my vk account</a></div>
+  <div v-bind:class="{goodText: normal}" >this string blue if normal</div>
+  <div v-bind:class="{dangerText: hasError}" >this string red if has error</div>
+
+  <h3>Here i'm create list with search systems:</h3>
+  <ul id="example-1">
+    <li v-for="(item, index) in list">
+      <a :href="item.url">{{ item.name }} #{{index}}</a>
+    </li>
+  </ul>
+
+  <ul id="example-1">
+    <li v-for="item of list">
+      <a :href="item.url">{{ item.name }}</a>
+    </li>
+  </ul>
+</div>
+
+<script text="text/javascript">
+"use strict"
+var vm = new Vue({
+   el: '#vm',
+   data: {
+	   myName: 'Alexandr',
+	   text: `my name is `,
+	   limitCounter: Math.round(Math.random()*20),
+	   visibility: true,
+	   vkPage: 'https://vk.com/alexandrviktorovichsvistunov',
+       hasError: false,
+       list: [
+           {name: 'Yandex', url: 'http://yandex.ru'},
+           {name: 'Mail.ru', url: 'http://mail.ru'},
+           {name: 'Google', url: 'http://google.com'}
+       ]
+   },
+   methods: {
+      hideString: function() {
+          this.visibility = !this.visibility
+      }
+   },
+    // computed properties
+    computed: {
+       reversedNameString:function() {
+           return (this.text + this.myName).split(' ').reverse().join(' ')
+       },
+       normal: function(){
+         return !this.hasError;
+       },
+       reversedNameCapsLock: {
+           get: function(){
+               return this.myName.toUpperCase();
+           },
+           set: function(newName){
+               this.myName = newName.toUpperCase();
+           }
+       }
+    },
+    watch: {
+       myName: function(){
+           return console.log(`Now my name is ${this.myName}!`)
+       }
+    }
+  // опции
+})
+
+</script>
