@@ -1,0 +1,93 @@
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<style text="text/css">
+  button {
+    width: 50px;
+    height: 20px;
+  }
+  input {
+    width: 212px;
+    height: 20px;
+    margin-bottom:10px;
+  }
+</style>
+<div id="calculator">
+  <div><input type="text" v-bind:value="result"/></div>
+  <calc-button num-button="1" @addtoresult="addtoresulttop"></calc-button>
+  <calc-button num-button="2" @addtoresult="addtoresulttop"></calc-button>
+  <calc-button num-button="3" @addtoresult="addtoresulttop"></calc-button>
+  <sign-button sign="+" @applysign="applysign"></sign-button>
+  <br/>
+  <calc-button num-button="4" @addtoresult="addtoresulttop"></calc-button>
+  <calc-button num-button="5" @addtoresult="addtoresulttop"></calc-button>
+  <calc-button num-button="6" @addtoresult="addtoresulttop"></calc-button>
+  <sign-button sign="-" @applysign="applysign"></sign-button>
+  <br/>
+  <calc-button num-button="7" @addtoresult="addtoresulttop"></calc-button>
+  <calc-button num-button="8" @addtoresult="addtoresulttop"></calc-button>
+  <calc-button num-button="9" @addtoresult="addtoresulttop"></calc-button>
+  <sign-button sign="*" @applysign="applysign"></sign-button>
+  <br/>
+  <sign-button sign="C" @clearresult="clearmainresult"></sign-button>
+  <calc-button num-button="0" @addtoresult="addtoresulttop"></calc-button>
+  <sign-button sign="=" @applysign="applysign"></sign-button>
+  <sign-button sign="/" @applysign="applysign"></sign-button>
+  <br/>
+</div>
+
+
+<script text="text/javascript">
+"use strict"
+// кнопки с цифрами
+Vue.component('calc-button', {
+    template: '<button @click="addto">{{ numButton }}</button>',
+    props: ['numButton'],
+    data: function () {
+        return { numButton: this.numButton }
+    },
+    methods: {
+        addto: function () {
+            this.$emit('addtoresult', this.numButton)
+        }
+    }
+})
+
+// кнопки со знаками
+Vue.component('sign-button', {
+    template: '<button @click="applyclick">{{ sign }}</button>',
+    props: ['sign'],
+    data: function () {
+        return { sign: this.sign }
+    },
+    methods: {
+        applyclick: function () {
+            this.sign === 'C' ? this.$emit('clearresult') : this.$emit('applysign', this.sign);
+        }
+    }
+})
+
+
+new Vue({
+    el: '#calculator',
+    data: {
+        result: ''
+    },
+    methods: {
+        addtoresulttop: function (it) {
+            this.result += it;
+        },
+        applysign: function (it) {
+            var
+                str = this.result;
+            if (it === '=') {
+                alert("i'm think it must be equal "+eval(str));
+            } else if (str[str.length-1] !== it) {
+                this.result += it
+            }
+        },
+        clearmainresult: function () {
+            this.result = ''
+        }
+    }
+})
+
+</script>

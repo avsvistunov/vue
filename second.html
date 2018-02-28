@@ -49,6 +49,13 @@
       <a :href="item.url">{{ item.name }}</a>
     </li>
   </ul>
+
+  <h3>Work with with events</h3>
+
+  <div id="example-1">
+    <button v-on:click="counter += 1">+1</button>
+    <p>Кнопка выше была нажата {{counter}} раз</p>
+  </div>
 </div>
 
 <script text="text/javascript">

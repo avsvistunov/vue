@@ -1,0 +1,59 @@
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<style text="text/css">
+
+</style>
+<div id="example">
+  <my-component my-prop-text="alert!"></my-component>
+</div>
+
+<div id="counter-event-example">
+  <p>{{ total }}</p>
+  <button-counter v-on:increment="incrementTotal"></button-counter>
+  <button-counter v-on:increment="incrementTotal"></button-counter>
+</div>
+
+<script text="text/javascript">
+"use strict"
+// регистрация
+Vue.component('my-component', {
+    template: '<div>{{this.myPropText}}</div>',
+    props: ['myPropText'],
+    data: function () {
+        return { counter: this.myPropText }
+    }
+})
+
+// создание корневого экземпляра
+new Vue({
+    el: '#example'
+})
+
+Vue.component('button-counter', {
+    template: '<button v-on:click="incrementCounter">{{ counter }}</button>',
+    data: function () {
+        return {
+            counter: 0
+        }
+    },
+    methods: {
+        incrementCounter: function () {
+            this.counter += 1
+            this.$emit('increment')
+        }
+    },
+})
+
+new Vue({
+    el: '#counter-event-example',
+    data: {
+        total: 0
+    },
+    methods: {
+        incrementTotal: function () {
+            this.total += 1
+        }
+    }
+})
+
+</script>

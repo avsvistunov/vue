@@ -1,0 +1,28 @@
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<style text="text/css">
+
+</style>
+<div id="vm">
+  <div id="example-1">
+    <button v-on:click="counter += 1">+1</button>
+    <p>Алиса нажала кнопочку выше {{counter}} раз</p>
+
+
+    <input v-model.trim="message" placeholder="отредактируй меня">
+    <p>Введённое сообщение: {{ message }}</p>
+  </div>
+</div>
+
+
+<script text="text/javascript">
+"use strict"
+var vm = new Vue({
+   el: '#vm',
+   data: {
+       counter: 0,
+       message: null
+   }
+})
+
+</script>
